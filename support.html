@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LitePennie · Support | 简记 · 支持</title>
+  <meta name="description" content="LedgerLite - A minimalist personal expense tracker. Data stored locally, fully offline, privacy first.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --teal: #14b8a6;
+      --bg: #f5f7f6;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --card: #ffffff;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--emerald); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 50%, var(--teal) 100%);
+      color: white;
+      padding: 80px 20px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      filter: blur(60px);
+    }
+    .hero::before { width: 300px; height: 300px; top: -80px; right: -80px; }
+    .hero::after { width: 250px; height: 250px; bottom: -100px; left: -60px; }
+    .hero-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+
+    /* Language switcher */
+    .lang-switch {
+      position: absolute;
+      top: 20px; right: 20px;
+      z-index: 2;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 999px;
+      padding: 4px;
+      display: flex;
+      backdrop-filter: blur(10px);
+    }
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lang-switch button.active { background: white; color: var(--emerald-dark); }
+
+    .app-icon {
+      width: 96px; height: 96px;
+      margin: 0 auto 24px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 22px;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .app-icon svg { width: 56px; height: 56px; }
+    .hero h1 { font-size: 36px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .hero .tagline { font-size: 16px; opacity: 0.9; margin-bottom: 28px; }
+    .hero .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .badge {
+      background: rgba(255,255,255,0.2);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      backdrop-filter: blur(10px);
+    }
+    .download-btn {
+      display: inline-block;
+      background: white;
+      color: var(--emerald-dark);
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+    .download-btn:hover { transform: translateY(-2px); text-decoration: none; }
+
+    /* Container */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+    /* Sections */
+    section { padding: 60px 0; }
+    section h2 {
+      font-size: 26px; font-weight: 800; margin-bottom: 24px;
+      text-align: center; letter-spacing: -0.3px;
+    }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .feature {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,185,129,0.1); }
+    .feature-icon { font-size: 32px; margin-bottom: 12px; }
+    .feature h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .feature p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* Privacy highlight */
+    .privacy {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .privacy .lock { font-size: 40px; margin-bottom: 12px; }
+    .privacy h3 { font-size: 18px; margin-bottom: 8px; }
+    .privacy p { color: var(--muted); font-size: 14px; max-width: 480px; margin: 0 auto; }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--card);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .faq-item details { padding: 0; }
+    .faq-item summary {
+      padding: 18px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 15px;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; font-size: 20px; color: var(--muted); transition: transform 0.2s; }
+    .faq-item details[open] summary::after { transform: rotate(45deg); }
+    .faq-item .answer { padding: 0 20px 18px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+
+    /* Contact */
+    .contact {
+      text-align: center;
+      background: var(--card);
+      padding: 40px 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+    .contact h3 { font-size: 18px; margin-bottom: 8px; }
+    .contact p { color: var(--muted); margin-bottom: 16px; font-size: 14px; }
+    .contact a {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--emerald);
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .contact a:hover { background: var(--emerald-dark); text-decoration: none; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer p { margin-bottom: 4px; }
+
+    /* Bilingual: show/hide by data-lang */
+    [data-lang] { display: none; }
+    html[lang="en"] [data-lang="en"] { display: block; }
+    html[lang="en"] [data-lang="en"].inline { display: inline; }
+    html[lang="zh"] [data-lang="zh"] { display: block; }
+    html[lang="zh"] [data-lang="zh"].inline { display: inline; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 80px; }
+      .hero h1 { font-size: 28px; }
+      section { padding: 40px 0; }
+      section h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="lang-switch">
+      <button id="btn-en" class="active" onclick="switchLang('en')">EN</button>
+      <button id="btn-zh" onclick="switchLang('zh')">中文</button>
+    </div>
+    <div class="hero-content">
+      <div class="app-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M14 12L24 26M34 12L24 26M24 26V36M17 31H31" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>LedgerLite</h1>
+      <p class="tagline">
+        <span data-lang="en" class="inline">Minimalist expense tracker · Offline · Privacy first</span>
+        <span data-lang="zh" class="inline">极简记账 · 离线可用 · 隐私优先</span>
+      </p>
+      <div class="badges">
+        <span class="badge">
+          <span data-lang="en" class="inline">🔒 Privacy First</span>
+          <span data-lang="zh" class="inline">🔒 隐私优先</span>
+        </span>
+        <span class="badge">
+          <span data-lang="en" class="inline">📱 Offline</span>
+          <span data-lang="zh" class="inline">📱 离线可用</span>
+        </span>
+        <span class="badge">
+          <span data-lang="en" class="inline">🆓 Ad-free</span>
+          <span data-lang="zh" class="inline">🆓 无广告</span>
+        </span>
+      </div>
+      <a href="#" class="download-btn">
+        <span data-lang="en" class="inline">Download on App Store</span>
+        <span data-lang="zh" class="inline">下载到 App Store</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section>
+    <div class="container">
+      <h2>
+        <span data-lang="en">Core Features</span>
+        <span data-lang="zh">核心功能</span>
+      </h2>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3><span data-lang="en" class="inline">Log in 3 Seconds</span><span data-lang="zh" class="inline">3秒记一笔</span></h3>
+          <p><span data-lang="en" class="inline">Income/expense toggle + numeric keypad for quick entry</span><span data-lang="zh" class="inline">收支切换 + 数字键盘，快速完成记录</span></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <h3><span data-lang="en" class="inline">Visual Reports</span><span data-lang="zh" class="inline">可视化报表</span></h3>
+          <p><span data-lang="en" class="inline">Monthly summary and daily trend charts at a glance</span><span data-lang="zh" class="inline">月度收支汇总、每日趋势图，花销一目了然</span></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✏️</div>
+          <h3><span data-lang="en" class="inline">Transaction Management</span><span data-lang="zh" class="inline">交易管理</span></h3>
+          <p><span data-lang="en" class="inline">Long-press to edit, swipe to delete, grouped by day</span><span data-lang="zh" class="inline">长按修改、左滑删除，按日分组查看</span></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔔</div>
+          <h3><span data-lang="en" class="inline">Daily Reminder</span><span data-lang="zh" class="inline">记账提醒</span></h3>
+          <p><span data-lang="en" class="inline">Daily notifications to build your tracking habit</span><span data-lang="zh" class="inline">每日定时通知，养成记账好习惯</span></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👁️</div>
+          <h3><span data-lang="en" class="inline">Amount Hiding</span><span data-lang="zh" class="inline">金额隐藏</span></h3>
+          <p><span data-lang="en" class="inline">One-tap hide amounts for privacy in public</span><span data-lang="zh" class="inline">一键隐藏金额，公共场合保护隐私</span></p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📥</div>
+          <h3><span data-lang="en" class="inline">Export Bills</span><span data-lang="zh" class="inline">账单导出</span></h3>
+          <p><span data-lang="en" class="inline">Export to CSV, opens directly in Excel</span><span data-lang="zh" class="inline">CSV 格式导出，Excel 直接打开</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="privacy">
+        <div class="lock">🔒</div>
+        <h3>
+          <span data-lang="en" class="inline">Privacy First, You're in Control</span>
+          <span data-lang="zh" class="inline">隐私安全，数据由你掌控</span>
+        </h3>
+        <p>
+          <span data-lang="en" class="inline">All data is stored locally on your device. Nothing is uploaded to any server. No data collection, no network requests, fully offline. Delete the app, delete all data — you have full control.</span>
+          <span data-lang="zh" class="inline">所有数据存储在设备本地，不上传任何服务器。不收集任何用户数据，无网络请求，完全离线可用。卸载即清除，你对自己的数据拥有完全控制权。</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <h2>
+        <span data-lang="en">FAQ</span>
+        <span data-lang="zh">常见问题</span>
+      </h2>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">Does data sync to the cloud?</span>
+            <span data-lang="zh" class="inline">数据会同步到云端吗？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">No. All data is stored locally on your device using iOS secure storage (NSUserDefaults). Nothing is uploaded to any server.</span>
+            <span data-lang="zh" class="inline">不会。简记的所有数据都存储在你的设备本地，使用 iOS 系统的安全存储机制（NSUserDefaults），不会上传到任何服务器。</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">Will I lose data when switching phones?</span>
+            <span data-lang="zh" class="inline">换手机后数据会丢失吗？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">Yes. Since data is fully local, it won't auto-sync to a new phone. We recommend exporting a CSV backup before switching devices.</span>
+            <span data-lang="zh" class="inline">是的。因为数据完全本地存储，换新手机不会自动同步。建议在换机前用「导出账单」功能备份 CSV 文件。</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">Why isn't the reminder working?</span>
+            <span data-lang="zh" class="inline">记账提醒不工作怎么办？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">Check: 1) Settings → Notifications → LedgerLite → Allow; 2) The app must be running in background; 3) Reminder triggers only at the set time.</span>
+            <span data-lang="zh" class="inline">请检查：1) 设置 → 通知 → 简记 → 允许通知；2) App 需要在后台运行才能收到提醒；3) 提醒时间需到点才会触发。</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">How to edit or delete a transaction?</span>
+            <span data-lang="zh" class="inline">如何修改或删除交易？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">On the Transactions page: long-press a transaction to edit (amount, note, date, type); swipe left to reveal the delete button.</span>
+            <span data-lang="zh" class="inline">在「明细」页：长按某条交易可修改（金额、备注、日期、收支类型）；向左滑动交易可显示删除按钮。</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">Where is the exported CSV?</span>
+            <span data-lang="zh" class="inline">导出的 CSV 在哪里？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">Tap "Export Bills" on the Settings page. The system share sheet will appear — save to Files, send via email, or share to other apps.</span>
+            <span data-lang="zh" class="inline">在「我的」页点「导出账单到本地」，会触发系统分享面板，你可以保存到文件 App、发到微信或邮件。</span>
+          </div>
+        </details>
+      </div>
+
+      <div class="faq-item">
+        <details>
+          <summary>
+            <span data-lang="en" class="inline">Is the app free? Any in-app purchases?</span>
+            <span data-lang="zh" class="inline">App 收费吗？有内购吗？</span>
+          </summary>
+          <div class="answer">
+            <span data-lang="en" class="inline">LedgerLite is completely free, no in-app purchases, no ads, all features free forever.</span>
+            <span data-lang="zh" class="inline">简记完全免费，无任何内购，无广告，永久免费使用所有功能。</span>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="contact">
+        <h3>
+          <span data-lang="en" class="inline">Need Help?</span>
+          <span data-lang="zh" class="inline">需要帮助？</span>
+        </h3>
+        <p>
+          <span data-lang="en" class="inline">Questions or suggestions? Contact us anytime</span>
+          <span data-lang="zh" class="inline">有问题或建议，随时联系我们</span>
+        </p>
+        <a href="mailto:jsonlees121@gmail.com">
+          <span data-lang="en" class="inline">Contact Support</span>
+          <span data-lang="zh" class="inline">联系支持</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2024 LedgerLite · <span data-lang="en" class="inline">Simplicity for Life</span><span data-lang="zh" class="inline">致简生活</span></p>
+    <p><a href="#privacy-policy"><span data-lang="en" class="inline">Privacy Policy</span><span data-lang="zh" class="inline">隐私政策</span></a> · 
+      <a href="#terms"><span data-lang="en" class="inline">Terms</span><span data-lang="zh" class="inline">使用条款</span></a></p>
+  </footer>
+
+  <script>
+    function switchLang(lang) {
+      document.documentElement.lang = lang;
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+      // 记住语言选择
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+    }
+    // 读取上次选择的语言，默认英文
+    (function() {
+      var saved = 'en';
+      try { saved = localStorage.getItem('lang') || 'en'; } catch (e) {}
+      switchLang(saved);
+    })();
+  </script>
+
+</body>
+</html>
